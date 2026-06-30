@@ -162,3 +162,12 @@ Cubren: store de favoritos, parseo de API, validación Zod, debounce, formateo d
 - **Quick Actions** (long-press en una card → share, favorite, apply)
 - **Glass tab bar** con `BlurView`
 - **Haptics** en swipe, long-press y favoritos
+
+---
+
+## 🤖 Desarrollo asistido por IA
+
+Durante el desarrollo de esta prueba técnica se utilizó **Claude Code** como
+herramienta de asistencia para generación de código, refactorización, limpieza
+de código muerto y redacción de este README. Todas las decisiones de arquitectura,
+diseño y UX fueron tomadas y validadas por el autor.
