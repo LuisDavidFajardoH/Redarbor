@@ -1,38 +1,39 @@
 {
   "expo": {
-    "name": "Redarbor",
-    "slug": "Redarbor",
+    "name": "Remota",
+    "slug": "Remota",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "redarbor",
+    "icon": "./assets/images/IconREMOTA.png",
+    "scheme": "remota",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/images/IconREMOTA.png"
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
-        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+        "backgroundColor": "#6366F1",
+        "foregroundImage": "./assets/images/IconREMOTA.png",
+        "monochromeImage": "./assets/images/IconREMOTA.png"
       },
       "predictiveBackGestureEnabled": false
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/IconREMOTA.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#208AEF",
+          "backgroundColor": "#0B0B0E",
+          "image": "./assets/images/IconREMOTA.png",
+          "imageWidth": 120,
           "android": {
-            "image": "./assets/images/splash-icon.png",
-            "imageWidth": 76
+            "image": "./assets/images/IconREMOTA.png",
+            "imageWidth": 120
           }
         }
       ],
