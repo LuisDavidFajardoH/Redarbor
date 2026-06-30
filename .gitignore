@@ -33,11 +33,12 @@ yarn-error.*
 # local env files
 .env*.local
 
-# typescript
-*.tsbuildinfo
+# testing
+coverage/
 
 example
 
 # generated native folders
 /ios
 /android
+config.bat
