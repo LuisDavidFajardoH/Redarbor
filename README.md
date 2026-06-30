@@ -1,56 +1,249 @@
-# Welcome to your Expo app 👋
+# Redarbor — Remote Job Board
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+App móvil multiplataforma (iOS / Android) que consume la API pública de
+[Remotive](https://remotive.com/api/remote-jobs). Permite buscar empleos
+remotos, filtrar por categoría y tipo, ver el detalle de cada oferta, compartir
+y guardar favoritos de forma persistente.
 
-## Get started
+Diseño **dark/light**, con animaciones y arquitectura **offline-first**.
 
-1. Install dependencies
+---
 
-   ```bash
-   npm install
-   ```
+## ✨ Funcionalidades
 
-2. Start the app
+Dos pestañas: **Empleos** y **Favoritos**. El detalle se abre desde ambas.
 
-   ```bash
-   npx expo start
-   ```
+**Empleos**
+- Búsqueda **debounced** (300 ms) por título/empresa con _fuzzy_ (**Fuse.js**)
+- **Filtros en bottom-sheet** (`@gorhom/bottom-sheet`): categoría, tipo de empleo
+  y orden, con Reset / Apply, badge `Filters (n)` y resumen bajo la búsqueda
+- Resumen de resultados, **FlashList**, _pull-to-refresh_ y entrada animada
 
-In the output, you'll find options to open the app in a
+**Job Card**
+- Logo, título, empresa, ubicación, badge de tipo, fecha, salario y tags
+- Botón favorito animado, swipe y long-press con **haptics**
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+**Job Detail**
+- Hero (logo, título, empresa, meta), favorito y compartir
+- HTML organizado en **secciones** según los encabezados del anuncio y **saneado**
+- Botón **Apply Now** _sticky_
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+**Favoritos**
+- Búsqueda + orden (Más reciente / Más antiguo / Empresa / Publicación)
+- Mismo `JobCard`, empty state con CTA. Persistencia local (Zustand + AsyncStorage)
 
-## Get a fresh project
+**Transversal**
+- **Offline-first**: cache de React Query persistida en disco + banner offline
+- Microanimaciones (moti + reanimated), skeleton loaders
+- Tema claro/oscuro con toggle, persistido en Zustand
 
-When you're ready, run:
+---
+
+## 🧱 Stack
+
+| Área              | Elección                                   |
+| ----------------- | ------------------------------------------ |
+| Framework         | Expo SDK 52 (RN 0.76, React 18.3)          |
+| Lenguaje          | TypeScript                                 |
+| Navegación        | Expo Router (file-based)                   |
+| Datos de servidor | TanStack React Query v5 (+ persist-client) |
+| Estado local      | Zustand v5 + `persist`                     |
+| Listas            | @shopify/flash-list                        |
+| Bottom sheets     | @gorhom/bottom-sheet v5                    |
+| Gestos / haptics  | react-native-gesture-handler + expo-haptics |
+| Búsqueda          | Fuse.js (fuzzy)                            |
+| Red / offline     | @react-native-community/netinfo            |
+| Validación        | Zod (en el _boundary_ de la API)           |
+| Estilos           | NativeWind v4 (Tailwind)                   |
+| Animaciones       | moti + react-native-reanimated             |
+| Iconos            | lucide-react-native                        |
+| HTML              | react-native-render-html (saneado)         |
+| Imágenes          | expo-image (con caché)                     |
+| Testing           | Jest + React Native Testing Library        |
+
+---
+
+## 🚀 Instalación
+
+### Requisitos previos
+
+- **Node.js ≥ 18** ([descargar](https://nodejs.org/))
+- **Git** ([descargar](https://git-scm.com/))
+- **Expo Go** en el dispositivo físico ([iOS](https://apps.apple.com/app/expo-go/id982107779) /
+  [Android](https://play.google.com/store/apps/details?id=host.exp.exponent))
+  o un emulador/simulador configurado
+
+### macOS
 
 ```bash
-npm run reset-project
+# Clonar el repo
+git clone <repo-url> && cd Redarbor
+
+# Instalar dependencias
+npm install
+
+# Iniciar Metro
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+- Pulsá `i` para abrir en **simulador iOS** (requiere Xcode)
+- Pulsá `a` para abrir en **emulador Android** (requiere Android Studio)
+- O escaneá el QR con **Expo Go** en tu dispositivo
 
-### Other setup steps
+#### Configurar simulador iOS (opcional)
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+```bash
+# Instalar Xcode desde la App Store, luego:
+sudo xcode-select --switch /Applications/Xcode.app
+xcodebuild -runFirstLaunch   # aceptar licencia
+```
 
-## Learn more
+#### Configurar emulador Android (opcional)
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+# Instalar Android Studio, luego crear un AVD:
+#  Android Studio → More Actions → Virtual Device Manager → Create device
+# O usar un dispositivo físico con Depuración USB activada
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Windows
 
-## Join the community
+```bash
+# Clonar el repo (PowerShell o Git Bash)
+git clone <repo-url> && cd Redarbor
 
-Join our community of developers creating universal apps.
+# Instalar dependencias
+npm install
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+# Iniciar Metro
+npx expo start
+```
+
+- Pulsá `a` para abrir en **emulador Android** (requiere Android Studio)
+- O escaneá el QR con **Expo Go** en tu dispositivo (iOS/Android)
+
+#### Configurar emulador Android en Windows
+
+1. Instalar [Android Studio](https://developer.android.com/studio)
+2. En Android Studio: **More Actions → Virtual Device Manager → Create device**
+3. Elegir un dispositivo (ej. Pixel 7) y una imagen del sistema (API 34+)
+4. Asegurarse de que `ANDROID_HOME` esté configurado como variable de entorno
+5. Activar **Depuración USB** si usás un dispositivo físico
+
+> En Windows no se puede compilar para iOS (requiere macOS + Xcode). Usá
+> **Expo Go** en un iPhone físico para probar en iOS desde Windows.
+
+### Ambos sistemas
+
+```bash
+npm install        # instalar dependencias
+npx expo start     # iniciar Metro
+```
+
+### Scripts
+
+```bash
+npm start            # expo start
+npm run ios          # abrir en simulador iOS
+npm run android      # abrir en emulador Android
+npm run lint         # ESLint
+npm run typecheck    # tsc --noEmit
+npm test             # Jest
+npm run test:coverage# Jest con cobertura
+npm run format       # Prettier
+```
+
+---
+
+## 🗂️ Arquitectura
+
+```
+src/
+ ├── app/                 # Rutas (Expo Router)
+ │    ├── _layout.tsx     # Providers + Stack
+ │    ├── (tabs)/
+ │    │    ├── _layout.tsx   # Tabs + tab bar glass
+ │    │    ├── index.tsx     # Listado de empleos
+ │    │    └── favorites.tsx # Favoritos
+ │    └── job/[id].tsx    # Detalle
+ ├── api/                 # remotive.ts (fetch + validación zod)
+ ├── components/          # JobCard, SearchBar, StateView, HtmlContent, Skeleton
+ │    ├── sheets/         # FiltersSheet, QuickActionsSheet
+ │    └── ui/             # Button, Chip
+ ├── hooks/               # useJobs, useDebounce, useFavorites, useSmartSearch, useNetwork
+ ├── store/               # favoritesStore, themeStore (zustand + persist)
+ ├── lib/                 # http, format, cn, filterJobs, share, sections
+ ├── theme/               # tokens (colores light/dark)
+ └── types/               # job.ts, filters.ts (interfaces + esquemas zod)
+```
+
+---
+
+## 🧠 Decisiones técnicas
+
+### Filtrado client-side (por qué no usamos `?category=` / `?search=` de la API)
+
+La API de Remotive **no permite filtrar resultados por categoría, tipo de empleo
+ni búsqueda de texto desde el servidor con garantías de disponibilidad**.
+
+- El endpoint `/categories` **SÍ es real** y se consume vía `fetchCategories()`.
+  De ahí salen las opciones del filtro de categoría.
+- El resto del filtrado (categoría, tipo de empleo, búsqueda) se hace
+  **client-side** sobre los datos ya cargados, con `filterAndSortJobs()`.
+
+**¿Por qué?**
+
+Remotive **bloquea a partir de ~2 requests/minuto** (recomienda 4 al día).
+Aunque la búsqueda tiene **debounce (300 ms)** para no disparar lógica en cada
+tecla, filtrar server-side implicaría requests HTTP por cada cambio de filtro
+→ bloqueo seguro en segundos. En cambio, **una sola llamada** trae todo el
+listado; filtrar en local con `useSmartSearch` (Fuse.js) + `filterAndSortJobs`
+es **instantáneo** y funciona sin conexión.
+
+### React Query (datos) + Zustand (favoritos)
+
+Los empleos son _server state_ (caché, reintentos, `refetch`) → React Query
+evita reimplementar todo eso. Los favoritos son _client state_ persistente →
+Zustand + `persist` es ligero y sin _boilerplate_.
+
+### Validación con Zod
+
+La API es JSON externo no tipado; se valida en el _boundary_
+(`src/api/remotive.ts`) para no propagar datos inválidos.
+
+### Seguridad HTML
+
+`react-native-render-html` con `ignoredDomTags` (`script`, `iframe`, `form`, …)
+para mitigar XSS.
+
+---
+
+## ⚡ Rendimiento y accesibilidad
+
+- `FlashList` virtualizada con `keyExtractor`, `estimatedItemSize`
+- `React.memo` en `JobCard`; `useCallback`/`useMemo` para props estables
+- `expo-image` con caché y placeholder
+- Búsqueda con _debounce_ para evitar renders excesivos
+- `accessibilityRole` / `accessibilityLabel` / `accessibilityState` en todos los
+  elementos interactivos (VoiceOver / TalkBack)
+- Skeleton loaders con `accessibilityElementsHidden`
+
+---
+
+## 🔐 Seguridad
+
+- API pública: **sin claves ni secretos** en el repo
+- `fetch` con _timeout_ (`AbortController`), reintentos limitados (`retry: 1`) y
+  errores tipados
+- Validación de datos con Zod y saneado del HTML
+
+---
+
+## 🧪 Testing
+
+`Jest` + `React Native Testing Library`.
+
+```bash
+npm test              # ejecutar tests
+npm run test:coverage # con cobertura
+```

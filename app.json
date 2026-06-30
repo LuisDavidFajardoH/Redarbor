@@ -7,6 +7,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "redarbor",
     "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
     "ios": {
       "icon": "./assets/expo.icon"
     },
@@ -34,11 +35,11 @@
             "imageWidth": 76
           }
         }
-      ]
+      ],
+      "expo-asset"
     ],
     "experiments": {
-      "typedRoutes": true,
-      "reactCompiler": true
+      "typedRoutes": true
     }
   }
 }
